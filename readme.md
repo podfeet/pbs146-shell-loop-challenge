@@ -8,6 +8,7 @@ Bart is teaching a mini-series on shell scripting and in [PBS 146](https://pbs.b
 
 If you’d like to put your Bash skills to the test, try writing a script that accepts a whole number as an input, either as the first argument or from a user prompt, then prints out the standard n-times multiplication tables to the screen, i.e., if you give the number 3, the output should be:
 
+```
 1 x 3 = 3
 2 x 3 = 6
 3 x 3 = 9
@@ -18,6 +19,7 @@ If you’d like to put your Bash skills to the test, try writing a script that a
 8 x 3 = 24
 9 x 3 = 27
 10 x 3 = 30
+```
 
 You should use the bc (basic calculator) terminal command to do the arithmetic. You’ll need to teach yourself how to use it either with the help of your favourite search engine, or the man page (man bc).
 
