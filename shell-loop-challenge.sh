@@ -13,15 +13,33 @@ rangemax=$3
 # code to make sure it's really a whole number
 
 until echo "$number" | egrep -q '^[[:digit:]]+$'
-do
-	read -p "Give me a whole number and I'll show you the times table for it: " number
-done
+	do
+		read -p "Give me a whole number and I'll show you the times table for it: " number
+		until echo "$rangemin" | egrep -q '^[[:digit:]]+$'
+			do
+				read -p "Define a range of values to multiply by - starting by the minimum: " rangemin		
+			done
+		until echo "$rangemax" | egrep -q '^[[:digit:]]+$'
+			do
+				read -p "Now give me the max number by which you want to multiply: " rangemax 
+			done
+		echo "minimum is $rangemin and maximum is $rangemax and initial number is $number"
+	done
+
 
 # use `bc` basic calculator to do the arithmetic
 
-for multiplier in {1..10}
-do
-	answer=`echo "$number*$multiplier" | bc`
-	echo "$multiplier x $number = $answer"
-done
-
+# for multiplier in {$rangemin..$rangemax}
+# 	do
+# 		echo "starting with $multiplier"
+# 		answer=`echo "$number*$multiplier" | bc`
+# 		echo "$multiplier x $number = $answer"
+# 	done
+	
+for ((multiplier=$rangemin; multiplier<=$rangemax; multiplier++))
+	do
+		answer=`echo "$number*$multiplier" | bc`
+		echo "$multiplier x $number = $answer"	
+	done
+	
+	
