@@ -29,40 +29,24 @@ until echo "$number" | egrep -q '^[[:digit:]]+$'
 
 # use `bc` basic calculator to do the arithmetic
 
-# FAILED to work
-# for multiplier in {$rangemin..$rangemax}
-# 	do
-# 		echo "starting with $multiplier"
-# 		answer=`echo "$number*$multiplier" | bc`
-# 		echo "$multiplier x $number = $answer"
-# 	done
-
-# another option using "while" and a smidge more elegant:
-# START=1
-# END=5
-# ## save $START, just in case if we need it later ##
-# i=$START
-# while [[ $i -le $END ]]
-# do
-#     echo "$i"
-#     ((i = i + 1))
-# done
-	
-	
-if [[ $rangemin < $rangemax ]]
-then
-	for ((multiplier=$rangemin; multiplier<=$rangemax; multiplier++))
-		do
-			answer=`echo "$number*$multiplier" | bc`
-			echo "$multiplier x $number = $answer"	
-		done
+# Error check in case they put a bigger minimum than maximum
+if [[ $rangemin -le $rangemax ]]
+	then
+		while  [[ $rangemin -le $rangemax ]]
+			do 
+				answer=`echo "$rangemin*$number" | bc`
+				echo "$rangemin x $number = $answer"	
+				((rangemin=rangemin+1))
+			done
 	else
-		for ((multiplier=$rangemax; multiplier<=$rangemin; multiplier--))
-		do
-			answer=`echo "$number*$multiplier" | bc`
-			echo "$multiplier x $number = $answer"	
-		done
-	fi
+		while  [[ $rangemin -gt $rangemax ]]
+			do
+				answer=`echo "$rangemin*$number" | bc`
+				echo "$rangemin x $number = $answer"	
+				((rangemin=rangemin-1))
+			done
+fi
+			
 
 		
 	
