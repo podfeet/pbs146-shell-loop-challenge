@@ -29,6 +29,7 @@ until echo "$number" | egrep -q '^[[:digit:]]+$'
 
 # use `bc` basic calculator to do the arithmetic
 
+# FAILED to work
 # for multiplier in {$rangemin..$rangemax}
 # 	do
 # 		echo "starting with $multiplier"
@@ -36,10 +37,21 @@ until echo "$number" | egrep -q '^[[:digit:]]+$'
 # 		echo "$multiplier x $number = $answer"
 # 	done
 	
-for ((multiplier=$rangemin; multiplier<=$rangemax; multiplier++))
-	do
-		answer=`echo "$number*$multiplier" | bc`
-		echo "$multiplier x $number = $answer"	
-	done
 	
+if [[ $rangemin < $rangemax ]]
+then
+	for ((multiplier=$rangemin; multiplier<=$rangemax; multiplier++))
+		do
+			answer=`echo "$number*$multiplier" | bc`
+			echo "$multiplier x $number = $answer"	
+		done
+	else
+		for ((multiplier=$rangemax; multiplier<=$rangemin; multiplier--))
+		do
+			answer=`echo "$number*$multiplier" | bc`
+			echo "$multiplier x $number = $answer"	
+		done
+	fi
+
+		
 	
