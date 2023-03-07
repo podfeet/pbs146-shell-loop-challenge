@@ -36,6 +36,17 @@ until echo "$number" | egrep -q '^[[:digit:]]+$'
 # 		answer=`echo "$number*$multiplier" | bc`
 # 		echo "$multiplier x $number = $answer"
 # 	done
+
+# another option using "while" and a smidge more elegant:
+# START=1
+# END=5
+# ## save $START, just in case if we need it later ##
+# i=$START
+# while [[ $i -le $END ]]
+# do
+#     echo "$i"
+#     ((i = i + 1))
+# done
 	
 	
 if [[ $rangemin < $rangemax ]]
