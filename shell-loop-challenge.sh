@@ -1,7 +1,26 @@
 #!/usr/bin/env bash
-
-# loops: for, while, until, select
-# For bonus credit, update your script to allow the user to specify how high the table should go, defaulting to 10 like above.
+# Written by Allison Sheridan (aka @podfeet) in 2023 under the MIT license
+# This script was written as a response to the challenge posted by
+# Bart Busschots in Programming By Stealth 146 at https://pbs.bartificer.net/pbs146
+# The challenge was written as:
+	# If you’d like to put your Bash skills to the test, try writing a script that accepts a whole number as an input, either as the first argument or from a user prompt, then prints out the standard n-times multiplication tables to the screen, i.e., if you give the number 3, the output should be:
+	
+	# ```
+	# 1 x 3 = 3
+	# 2 x 3 = 6
+	# 3 x 3 = 9
+	# 4 x 3 = 12
+	# 5 x 3 = 15
+	# 6 x 3 = 18
+	# 7 x 3 = 21
+	# 8 x 3 = 24
+	# 9 x 3 = 27
+	# 10 x 3 = 30
+	# ```
+	
+	# For bonus credit, update your script to allow the user to specify how high the table should go, defaulting to 10 like above.
+#
+# My solution goes a bit beyond and allows the user to define the specific range, not just 1-x
 
 # use the first argument as the number if it was given
 number=$1
@@ -20,11 +39,6 @@ regex="^[0-9]+$"
 # if no argument was provided ask for one
 # code to make sure it's really a whole number
 
-# ← Need to skip all this if 3 values were supplied! → 
-# use that if [[ -z $1 $2 $3 ]] type syntax
-# Want to say if $1 is blank then do everything below. If $1 exists, check to see if $2 and $3 exist
-# what if $1 exists and $2 exists but no $3? I guess I could let them count down or up to 10?
-
 if [[ -z $number ]] # if no arguments were supplied
 	then
 		# Ask user for the number to multiply and optionally to define the range
@@ -35,7 +49,7 @@ if [[ -z $number ]] # if no arguments were supplied
 				done	
 				# ask if user wants to define the range. If they answer anything but yes, it will use the default of 1-10
 				read -p "Do you want to define the range for the times table? Type yes or no " yesno
-				if [ $yesno == 'yes'  ] || [ $yesno == 'y' ]
+				if [ $yesno == 'yes'  ] || [ $yesno == 'y' ] || [ $yesno == 'Y' ] || [ $yesno == 'YES' ]
 					then
 						# Keep asking till the user supplies a whole number for range min	
 						# Ask user for range minimum and assign to variable rangemin
