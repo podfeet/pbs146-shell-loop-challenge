@@ -14,7 +14,10 @@ rangemax=$3
 
 # ← Need to skip all this if 3 values were supplied! → 
 # use that if [[ -z $1 $2 $3 ]] type syntax
+# Want to say if $1 is blank then do everything below. If $1 exists, check to see if $2 and $3 exist
+# what if $1 exists and $2 exists but no $3? I guess I could let them count down or up to 10?
 
+# Ask user for the number to multiply and optionally to define the range
 until echo "$number" | egrep -q '^[[:digit:]]+$'
 	do
 		read -p "Give me a whole number and I'll show you the times table for it " number
@@ -38,29 +41,13 @@ until echo "$number" | egrep -q '^[[:digit:]]+$'
 			rangemax=10
 		fi
 	done
-	
-# THIS WORKS	
-# 	until echo "$number" | egrep -q '^[[:digit:]]+$'
-# 	do
-# 		read -p "Give me a whole number and I'll show you the times table for it from 1-10 " number
-# 		until echo "$rangemin" | egrep -q '^[[:digit:]]+$'
-# 			do
-# 				read -p "Define a range of values to multiply by - starting by the minimum: " rangemin		
-# 			done
-# 		until echo "$rangemax" | egrep -q '^[[:digit:]]+$'
-# 			do
-# 				read -p "Now give me the max number by which you want to multiply: " rangemax 
-# 			done
-# 		echo "minimum is $rangemin and maximum is $rangemax and initial number is $number"
-# 	done
 
-# use `bc` basic calculator to do the arithmetic
-
-# Error check in case they put a bigger minimum than maximum
+# Check to see if they put in a bigger min than max, and count down instead if so
 if [[ $rangemin -le $rangemax ]]
 	then
 		while  [[ $rangemin -le $rangemax ]]
 			do 
+			''# use `bc` basic calculator to do the arithmetic
 				answer=`echo "$rangemin*$number" | bc`
 				echo "$rangemin x $number = $answer"	
 				((rangemin=rangemin+1))
@@ -68,8 +55,10 @@ if [[ $rangemin -le $rangemax ]]
 	else
 		while  [[ $rangemin -gt $rangemax ]]
 			do
+				# use `bc` basic calculator to do the arithmetic
 				answer=`echo "$rangemin*$number" | bc`
 				echo "$rangemin x $number = $answer"	
+				# decrement rangemin to count down
 				((rangemin=rangemin-1))
 			done
 fi
