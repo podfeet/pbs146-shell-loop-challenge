@@ -25,15 +25,16 @@ regex="^[0-9]+$"
 # Want to say if $1 is blank then do everything below. If $1 exists, check to see if $2 and $3 exist
 # what if $1 exists and $2 exists but no $3? I guess I could let them count down or up to 10?
 
-if [[ -z $number ]]
+if [[ -z $number ]] # if no arguments were supplied
 	then
-		echo "no number supplied"
 		# Ask user for the number to multiply and optionally to define the range
-		# until echo "$number" | egrep -q '^[[:digit:]]+$'
-# 		until echo "$number" | egrep -q $regex	
 		until [[ $number =~ $regex ]]			
 			do
 				read -p "Give me a whole number and I'll show you the times table for it: " number
+				until [[ $number =~ $regex ]]
+					do
+						read -p "That was not a whole number, try again: " number		
+					done	
 					# ask if user wants to define the range. If they answer anything but yes, it will use the default of 1-10
 					read -p "Do you want to define the range for the times table? Type yes or no " yesno
 					if [[ $yesno == 'yes' ]]
@@ -56,15 +57,20 @@ if [[ -z $number ]]
 				done
 	else
 		number=$1
-		if [[ -z $2 ]] # if there iss no second argument, there cannot be a third so do not worry about it
-			then # set range min/max to defaults
-				rangemin=1
-				rangemax=10
-			else # assume there is a second and third argument and use them
-				# if there iss no third argument, it multiplies down to zero. That sure iss convenient!
-				rangemin=$2
-				rangemax=$3
-		fi
+		if [[ $number =~ $regex ]]
+			then
+				if [[ -z $2 ]] # if there is no second argument, there cannot be a third so do not worry about it
+					then # set range min/max to defaults
+						rangemin=1
+						rangemax=10
+					else # assume there is a second and third argument and use them
+						# if there iss no third argument, it multiplies down to zero. That sure iss convenient!
+						rangemin=$2
+						rangemax=$3
+				fi
+			else
+				echo "That was not a whole number"
+			fi
 fi
 
 # Check to see if they put in a bigger min than max, and count down instead if so
