@@ -28,33 +28,32 @@ regex="^[0-9]+$"
 if [[ -z $number ]] # if no arguments were supplied
 	then
 		# Ask user for the number to multiply and optionally to define the range
-		until [[ $number =~ $regex ]]			
-			do
-				read -p "Give me a whole number and I'll show you the times table for it: " number
-				until [[ $number =~ $regex ]]
-					do
-						read -p "That was not a whole number, try again: " number		
-					done	
-					# ask if user wants to define the range. If they answer anything but yes, it will use the default of 1-10
-					read -p "Do you want to define the range for the times table? Type yes or no " yesno
-					if [[ $yesno == 'yes' ]]
-						then
-							# Keep asking till the user supplies a whole number for range min		
-							until echo "$rangemin" | egrep -q $regex
-								do
-									# Ask user for range minimum and assign to variable rangemin
-									read -p "Give me the minimum value by which you want to multiply: " rangemin		
-								done
-							# Keep asking till the user supplies a whole number for range max
-							until echo "$rangemax" | egrep -q $regex
-								do
-									read -p "Now give me the max value by which you want to multiply: " rangemax 
-								done
-					else
-						rangemin=1
-						rangemax=10
-					fi
-				done
+			read -p "Give me a whole number and I'll show you the times table for it: " number
+			until [[ $number =~ $regex ]]
+				do
+					read -p "That was not a whole number, try again: " number		
+				done	
+				# ask if user wants to define the range. If they answer anything but yes, it will use the default of 1-10
+				read -p "Do you want to define the range for the times table? Type yes or no " yesno
+				if [ $yesno == 'yes'  ] || [ $yesno == 'y' ]
+					then
+						# Keep asking till the user supplies a whole number for range min	
+						# Ask user for range minimum and assign to variable rangemin
+						read -p "Give me the MINIMUM value by which you want to multiply: " rangemin		
+						until echo "$rangemin" | egrep -q $regex
+							do
+								read -p "That was not a whole number, try again: " rangemin	
+							done
+						# Keep asking till the user supplies a whole number for range max
+						read -p "Now give me the MAX value by which you want to multiply: " rangemax
+						until echo "$rangemax" | egrep -q $regex
+							do
+								 read -p "That was not a whole number, try again: " rangemax
+							done
+				else
+					rangemin=1
+					rangemax=10
+				fi
 	else
 		number=$1
 		if [[ $number =~ $regex ]]
