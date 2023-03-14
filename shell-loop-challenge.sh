@@ -49,7 +49,8 @@ if [[ -z $number ]] # if no arguments were supplied
 				# Quotes added around var $yesno otherwise I get a unary operator error
 				# Without the quotes, if the value doesn't exist, the variable vanishes, leaving if [ = "yes"]
 				# Single [] brackets are POSIX compatible. If I used double [] brackets I wouldn't need the "" around var
-				if [ "$yesno" == 'yes'  ] || [ "$yesno" == 'y' ] || [ "$yesno" == 'Y' ] || [ "$yesno" == 'YES' ]
+				# if [[ $yesno == 'yes' ]] || [[ $yesno == 'y' ]] || [[ $yesno == 'Y' ]] || [[ $yesno == 'YES' ]]
+				if [ "$yesno" == 'yes' ] || [ "$yesno" == 'y' ] || [ "$yesno" == 'Y' ] || [ "$yesno" == 'YES' ]
 					then
 						# Keep asking till the user supplies a whole number for range min	
 						# Ask user for range minimum and assign to variable rangemin
