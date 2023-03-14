@@ -28,7 +28,9 @@ rangemin=$2
 rangemax=$3
 
 # Define a regular expression for a whole number to check each value against
-regex=^[0-9]+$
+# Optional + or - sign followed by one or more digits from 0 to 9
+# This allows whole positive or negative numbers
+regex=^[+-]?[0-9]+$
 
 # until statement to see if an argument was provided
 # if no argument was provided ask for one
@@ -36,7 +38,7 @@ regex=^[0-9]+$
 
 if [[ -z $number ]] # if no arguments were supplied
 	then
-		# Ask user for the number to multiply and optionally to define the range
+		# Ask user for the whole number to multiply and optionally to define the range
 			read -p "Give me a whole number and I'll show you the times table for it: " number
 			until [[ $number =~ $regex ]]
 				do
