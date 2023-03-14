@@ -28,7 +28,7 @@ rangemin=$2
 rangemax=$3
 
 # Define a regular expression for a whole number to check each value against
-regex="^[0-9]+$"
+regex=^[0-9]+$
 
 # until statement to see if an argument was provided
 # if no argument was provided ask for one
@@ -43,8 +43,11 @@ if [[ -z $number ]] # if no arguments were supplied
 					read -p "That was not a whole number, try again: " number		
 				done	
 				# ask if user wants to define the range. If they answer anything but yes, it will use the default of 1-10
-				read -p "Do you want to define the range for the times table? Type yes or no " yesno
-				if [ $yesno == 'yes'  ] || [ $yesno == 'y' ] || [ $yesno == 'Y' ] || [ $yesno == 'YES' ]
+				read -p "Do you want to define the range for the times table? Type yes (y) or no (n or enter) " yesno
+				# Quotes added around var $yesno otherwise I get a unary operator error
+				# Without the quotes, if the value doesn't exist, the variable vanishes, leaving if [ = "yes"]
+				# Single [] brackets are POSIX compatible. If I used double [] brackets I wouldn't need the "" around var
+				if [ "$yesno" == 'yes'  ] || [ "$yesno" == 'y' ] || [ "$yesno" == 'Y' ] || [ "$yesno" == 'YES' ]
 					then
 						# Keep asking till the user supplies a whole number for range min	
 						# Ask user for range minimum and assign to variable rangemin
@@ -65,22 +68,22 @@ if [[ -z $number ]] # if no arguments were supplied
 					rangemin=1
 					rangemax=10
 				fi
-	else
-		number=$1
-		if [[ $number =~ $regex ]]
-			then
-				if [[ -z $2 ]] # if there is no second argument, there cannot be a third so do not worry about it
-					then # set range min/max to defaults
-						rangemin=1
-						rangemax=10
-					else # assume there is a second and third argument and use them
-						# if there is no third argument, it multiplies down to zero. That sure is convenient!
-						rangemin=$2
-						rangemax=$3
-				fi
-			else
-				echo "That was not a whole number"
+else
+	number=$1
+	if [[ $number =~ $regex ]]
+		then
+			if [[ -z $2 ]] # if there is no second argument, there cannot be a third so do not worry about it
+				then # set range min/max to defaults
+					rangemin=1
+					rangemax=10
+				else # assume there is a second and third argument and use them
+					# if there is no third argument, it multiplies down to zero. That sure is convenient!
+					rangemin=$2
+					rangemax=$3
 			fi
+		else
+			echo "That was not a whole number"
+		fi
 fi
 
 # Check to see if they put in a bigger min than max, and count down instead if so
