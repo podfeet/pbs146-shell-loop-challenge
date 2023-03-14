@@ -30,11 +30,6 @@ rangemax=$3
 # Define a regular expression for a whole number to check each value against
 regex="^[0-9]+$"
 
-# if [[ -z $number ]]
-# 	then
-# 		echo "no number supplied"
-# fi
-
 # until statement to see if an argument was provided
 # if no argument was provided ask for one
 # code to make sure it's really a whole number
@@ -54,7 +49,9 @@ if [[ -z $number ]] # if no arguments were supplied
 						# Keep asking till the user supplies a whole number for range min	
 						# Ask user for range minimum and assign to variable rangemin
 						read -p "Give me the MINIMUM value by which you want to multiply: " rangemin		
+						# ***********
 						until echo "$rangemin" | egrep -q $regex
+						# ****************
 							do
 								read -p "That was not a whole number, try again: " rangemin	
 							done
@@ -77,7 +74,7 @@ if [[ -z $number ]] # if no arguments were supplied
 						rangemin=1
 						rangemax=10
 					else # assume there is a second and third argument and use them
-						# if there iss no third argument, it multiplies down to zero. That sure iss convenient!
+						# if there is no third argument, it multiplies down to zero. That sure is convenient!
 						rangemin=$2
 						rangemax=$3
 				fi
